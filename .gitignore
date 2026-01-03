@@ -1,0 +1,23 @@
+# ===== .NET =====
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# ===== Angular / Node =====
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+
+# ===== Environment Files =====
+appsettings.Development.json
+appsettings.Production.json
+environment.ts
+environment.prod.ts
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
