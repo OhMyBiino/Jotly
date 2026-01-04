@@ -12,5 +12,6 @@ namespace Jotly.api.Models
         public DateTime Created_At { get; set; } = DateTime.Now;
 
         public int UserId { get; set; }
+        public User User { get; set; }
     }
 }
