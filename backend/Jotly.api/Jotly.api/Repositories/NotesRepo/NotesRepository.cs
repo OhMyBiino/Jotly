@@ -58,6 +58,7 @@ namespace Jotly.api.Repositories.NotesRepo
 
             item.Title = note.Title;
             item.Content = note.Content;
+
             await _context.SaveChangesAsync();
             return item;
         }
