@@ -1,4 +1,5 @@
 using Jotly.api.Data;
+using Jotly.api.Repositories.NotesRepo;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,10 @@ builder.Services.AddDbContextFactory<AppDbContext>( options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
+
+//Register Notes Service-Repository
+builder.Services.AddScoped<INotesRepository, NotesRepository>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
