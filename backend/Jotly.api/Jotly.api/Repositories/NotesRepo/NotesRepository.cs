@@ -9,12 +9,14 @@ namespace Jotly.api.Repositories.NotesRepo
     public class NotesRepository 
         (IDbContextFactory<AppDbContext> _contextFactory) : INotesRepository
     {
-        public async Task CreateAsync(Notes note)
+        public async Task<Notes> CreateAsync(Notes note)
         {
             await using var _context = _contextFactory.CreateDbContext();
 
-            _context.Add(note);
+            var result = await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
+
+            return result.Entity;
         }
 
         public async Task<bool> DeleteAsync(int Id)
@@ -49,18 +51,18 @@ namespace Jotly.api.Repositories.NotesRepo
             return note ?? null!;
         }
 
-        public async Task<Notes> UpdateAsync(Notes note)
+        public async Task UpdateAsync(Notes note)
         {
             await using var _context = _contextFactory.CreateDbContext();
 
             var item = await _context.Notes.FindAsync(note.NoteId);
-            if (item == null) return item!;
+            if (item == null) return;
 
             item.Title = note.Title;
             item.Content = note.Content;
 
             await _context.SaveChangesAsync();
-            return item;
+            return;
         }
     }
 }
