@@ -20,14 +20,15 @@ namespace Jotly.api.Services.NoteService
                         Title = n.Title,
                         Content = n.Content,
                         Created_At = n.Created_At,
+                        UserId = n.UserId,
                       }
                 );
 
                 return notes;
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
-                throw new Exception($"An error occured while getting all Notes, {ex.Message}");
+                throw;
             }
         }
 
@@ -43,31 +44,34 @@ namespace Jotly.api.Services.NoteService
                     Title = result.Title,
                     Content = result.Content,
                     Created_At = result.Created_At,
+                    UserId = result.UserId
                 };
 
                 return note;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception($"An error occured why retrieving the note, {ex.Message}");
+                throw;
             }            
         }
 
-        public async Task AddAsync(NotesDto notesDto) 
+        public async Task<Notes> AddAsync(CreateNoteDto request) 
         {
             try
             {
                 var note = new Notes()
                 {
-                    Title = notesDto.Title,
-                    Content = notesDto.Content
+                    Title = request.Title,
+                    Content = request.Content,
+                    Created_At = DateTime.UtcNow,
+                    UserId = request.UserId,
                 };
 
-                await _noteRepository.CreateAsync(note);
+                return await _noteRepository.CreateAsync(note);
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
-                throw new Exception($" An error occured while adding note, {ex.Message}");
+                throw;
             }
         }
 
@@ -84,9 +88,9 @@ namespace Jotly.api.Services.NoteService
 
                 await _noteRepository.UpdateAsync(note);
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
-                throw new Exception($"An error occured while updating the Note, {ex.Message}");
+                throw;
             }
         }
 
@@ -96,9 +100,9 @@ namespace Jotly.api.Services.NoteService
             {
                 await _noteRepository.DeleteAsync(Id);
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
-                throw new Exception($"An error occure while deleting the note, {ex.Message}");
+                throw;
             }
         }
 

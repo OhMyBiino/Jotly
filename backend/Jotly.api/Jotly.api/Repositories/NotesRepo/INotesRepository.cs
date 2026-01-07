@@ -7,7 +7,7 @@ namespace Jotly.api.Repositories.NotesRepo
     {
         public Task<IEnumerable<Notes>> GetAllAsync();
         Task<Notes> GetByIdAsync(int Id);
-        Task CreateAsync(Notes note);
+        Task<Notes> CreateAsync(Notes note);
         Task UpdateAsync(Notes note);
         Task<bool> DeleteAsync(int Id);
     }

@@ -1,4 +1,5 @@
 ﻿using Jotly.api.DTOs;
+using Jotly.api.Models;
 
 namespace Jotly.api.Services.NoteService
 {
@@ -6,7 +7,7 @@ namespace Jotly.api.Services.NoteService
     {
         Task<IEnumerable<NotesDto>> GetAllAsync();
         Task<NotesDto> GetByIdAsync(int id);
-        Task AddAsync(NotesDto notesDto);
+        Task<Notes> AddAsync(CreateNoteDto request);
         Task UpdateAsync(NotesDto notesDto);
         Task DeleteAsync(int Id);
     }
