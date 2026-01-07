@@ -1,0 +1,10 @@
+﻿using Jotly.api.Models;
+
+namespace Jotly.api.Repositories.UserRepo
+{
+    public interface IUserRepository
+    {
+        Task<User> CreateAsync(User user);
+        Task<IEnumerable<User>> GetAllAsync();
+    }
+}
