@@ -8,12 +8,18 @@ namespace Jotly.api.Services.UserService
     public class UserService (IUserRepository _userRepository) : IUserService
     {
 
-        public async Task<UserDto> CreateAsync(UserDto request) 
+        public async Task<UserDto> CreateAsync(CreateUserDto request) 
         {
+            //when adhering to best practice,
+            //this should check if the request data does have a match in the system
+
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
             var user = new User()
             {
                 Username = request.Username,
                 Email = request.Email,
+                PasswordHash = passwordHash,
             };
 
             var entity = await _userRepository.CreateAsync(user);
