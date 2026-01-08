@@ -24,5 +24,12 @@ namespace Jotly.api.Repositories.UserRepo
 
             return users ?? Enumerable.Empty<User>();
         }
+
+        public async Task<User?> GetByIdAsync(int Id) 
+        {
+            await using var _context = _contextFactory.CreateDbContext();
+
+            return await _context.Users.FindAsync(Id);
+        }
     }
 }

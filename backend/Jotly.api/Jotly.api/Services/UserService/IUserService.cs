@@ -6,5 +6,6 @@ namespace Jotly.api.Services.UserService
     {
         Task<UserDto> CreateAsync(CreateUserDto request);
         Task<IEnumerable<UserDto>> GetAllAsync();
+        Task<UserDto?> GetByIdAsync(int Id);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Jotly.api.DTOs;
 using Jotly.api.Models;
-using Jotly.api.Repositories.NotesRepo;
 using Jotly.api.Repositories.UserRepo;
 
 namespace Jotly.api.Services.UserService
@@ -34,6 +33,7 @@ namespace Jotly.api.Services.UserService
             return result;
         }
 
+        //Get All
         public async Task<IEnumerable<UserDto>> GetAllAsync() 
         {
             var entities = await _userRepository.GetAllAsync();
@@ -46,6 +46,21 @@ namespace Jotly.api.Services.UserService
             });
 
             return results;
+        }
+
+        //Get By Id
+        public async Task<UserDto?> GetByIdAsync(int Id) 
+        {
+            var user = await _userRepository.GetByIdAsync(Id);
+            if(user is null) 
+                return null;
+
+            return new UserDto
+            {
+                UserId = user.UserId,
+                Username= user.Username,
+                Email = user.Email,
+            };
         }
     }
 }
