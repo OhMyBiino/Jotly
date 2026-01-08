@@ -9,8 +9,8 @@ namespace Jotly.api.Controllers
     [ApiController]
     public class UsersController(IUserService _userService) : ControllerBase
     {
-        [HttpPut("create")]
-        public async Task<ActionResult<UserDto>> CreateUser([FromBody] UserDto request) 
+        [HttpPost("create")]
+        public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserDto request) 
         {
             var user = await _userService.CreateAsync(request);
 
