@@ -23,7 +23,7 @@ namespace Jotly.api.Controllers
             return Ok(notes);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<CreateNoteDto>> CreateNote([FromBody] CreateNoteDto request) 
         {
             var result = await _noteService.AddAsync(request);
