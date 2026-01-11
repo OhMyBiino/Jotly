@@ -1,4 +1,5 @@
-﻿using Jotly.api.Models;
+﻿
+using Jotly.api.Models;
 
 namespace Jotly.api.Repositories.UserRepo
 {
@@ -7,5 +8,6 @@ namespace Jotly.api.Repositories.UserRepo
         Task<User> CreateAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
         Task<User?> GetByIdAsync(int Id);
+        Task<User?> GetByUsernameAsync(string username);
     }
 }

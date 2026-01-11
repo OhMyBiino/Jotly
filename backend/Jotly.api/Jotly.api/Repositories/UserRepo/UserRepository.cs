@@ -31,5 +31,11 @@ namespace Jotly.api.Repositories.UserRepo
 
             return await _context.Users.FindAsync(Id);
         }
+
+        public async Task<User?> GetByUsernameAsync(string username) 
+        {
+            await using var _context = _contextFactory.CreateDbContext();
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username.ToLower());
+        }
     }
 }
