@@ -1,0 +1,16 @@
+﻿namespace Jotly.api.DTOs
+{
+    public class AuthResult
+    {
+        #region Properties
+
+        public bool IsSuccess { get; set; } = false;
+        public string? Token { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? ExpiresAt { get; set; }
+        public UserDto? user { get; set; }
+        public List<string> Errors { get; set; } = new();
+
+        #endregion Properties
+    }
+}
