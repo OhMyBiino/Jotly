@@ -5,8 +5,11 @@ using Jotly.api.Services.AuthService;
 using Jotly.api.Services.NoteService;
 using Jotly.api.Services.TokenService;
 using Jotly.api.Services.UserService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +45,26 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => 
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!)),
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            ClockSkew = TimeSpan.Zero
+
+        };
+    
+    });
+builder.Services.AddAuthorization();
 
 //AppDbContext Connection
 builder.Services.AddDbContextFactory<AppDbContext>( options =>
