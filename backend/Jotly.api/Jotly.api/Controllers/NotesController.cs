@@ -1,5 +1,6 @@
 ﻿using Jotly.api.DTOs;
 using Jotly.api.Services.NoteService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace Jotly.api.Controllers
             _noteService = noteService;
         }
 
+        [Authorize]
         [HttpGet("getall")]
         public async Task<ActionResult<IEnumerable<NotesDto>>> GetAllNotes() 
         {
