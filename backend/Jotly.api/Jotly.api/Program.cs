@@ -6,12 +6,42 @@ using Jotly.api.Services.NoteService;
 using Jotly.api.Services.TokenService;
 using Jotly.api.Services.UserService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//Swagger Config
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+       In = ParameterLocation.Header,
+       Name = "Authorization",
+       Type = SecuritySchemeType.Http,
+       Scheme = "bearer",
+       BearerFormat = "JWT",
+    });
+
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new List<string>()
+        }
+    });
+});
 
 //AppDbContext Connection
 builder.Services.AddDbContextFactory<AppDbContext>( options =>
@@ -46,6 +76,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+    
 
 app.UseAuthorization();
 
